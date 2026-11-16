@@ -47,11 +47,11 @@ npm run dev            # abre em http://localhost:3000
 As fotos originais estão em HEIC (formato do iPhone), que muitos celulares e computadores
 não abrem. Por isso o botão "Baixar" entrega a versão JPG em resolução cheia que o próprio
 Drive gera. No celular ele abre o menu de compartilhar ("Salvar imagem" → vai para a galeria).
-"Baixar sessão" / "Baixar todas" abrem a pasta no Drive (arquivos originais).
+"Baixar sessão" abre a pasta daquela sessão no Drive (arquivos originais).
 
 ## Como funciona
 
 - `api/photos.js` lista as imagens da pasta (e subpastas) pela API do Drive. A resposta fica
   em cache na Vercel por 5 minutos, então fotos novas aparecem em até ~5 min.
 - As miniaturas e os downloads vêm direto do Drive (`drive.google.com/thumbnail` e `uc?export=download`).
-- "Baixar todas" abre a pasta no Drive, onde dá pra baixar tudo em .zip.
+- "Baixar sessão" abre a subpasta no Drive, onde dá pra baixar tudo em .zip.

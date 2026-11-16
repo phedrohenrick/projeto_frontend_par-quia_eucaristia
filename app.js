@@ -29,9 +29,6 @@ async function load() {
 
     sections = data.sections;
     $('count').textContent = plural(data.total);
-    const link = $('folder-link');
-    link.href = data.folderUrl;
-    link.hidden = false;
 
     if (!sections.length) {
       status.textContent = 'As fotos ainda estão sendo enviadas. Volte em breve!';
@@ -247,16 +244,46 @@ viewer.addEventListener('touchend', (e) => {
 
 const video = $('cover-video');
 const sound = $('sound');
-if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  video.removeAttribute('autoplay');
-  video.pause();
-  video.controls = true;
+let userChoseMute = false;
+
+function setSound(on) {
+  video.muted = !on;
+  sound.setAttribute('aria-pressed', String(on));
+  sound.querySelector('span').textContent = on ? 'Desativar som' : 'Ativar som';
 }
+
+// Os navegadores só deixam vídeo com som tocar depois que a pessoa interage com a página.
+// Então: tenta tocar com som; se for bloqueado, toca mudo e liga o som no primeiro toque/clique.
+const UNLOCK_EVENTS = ['pointerdown', 'touchend', 'keydown'];
+function unlock(e) {
+  UNLOCK_EVENTS.forEach((t) => removeEventListener(t, unlock, true));
+  if (userChoseMute || sound.contains(e.target)) return; // o botão de som cuida sozinho
+  setSound(true);
+  video.play().catch(() => setSound(false));
+}
+
+async function startVideo() {
+  setSound(true);
+  try {
+    await video.play();
+  } catch {
+    setSound(false);
+    video.play().catch(() => {});
+    UNLOCK_EVENTS.forEach((t) => addEventListener(t, unlock, { capture: true, passive: true }));
+  }
+}
+
 sound.addEventListener('click', () => {
-  video.muted = !video.muted;
-  if (!video.muted && video.paused) video.play();
-  sound.setAttribute('aria-pressed', String(!video.muted));
-  sound.querySelector('span').textContent = video.muted ? 'Ativar som' : 'Som ativado';
+  const on = video.muted;
+  userChoseMute = !on;
+  setSound(on);
+  if (video.paused) video.play().catch(() => {});
 });
+
+if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  video.controls = true; // quem pediu menos movimento no celular dá o play quando quiser
+} else {
+  startVideo();
+}
 
 load();

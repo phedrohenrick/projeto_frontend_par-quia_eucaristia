@@ -39,9 +39,19 @@ svg { width: 1.15em; height: 1.15em; fill: none; stroke: currentColor; stroke-wi
 .logos {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  justify-content: center;
+  gap: 20px;
 }
+/* linha fina separando os dois logos */
+.logos::after {
+  content: '';
+  order: 1;
+  width: 1px;
+  align-self: stretch;
+  margin: 12px 0;
+  background: var(--gold-soft);
+}
+.logo-pascom { order: 2; }
 .logo-paroquia { height: 72px; width: auto; }
 .logo-pascom { height: 46px; width: auto; }
 
@@ -153,9 +163,6 @@ h1 {
 .btn:hover { filter: brightness(1.08); }
 .btn:active { transform: scale(.97); }
 .btn-light { background: #fff; color: #1d1712; min-height: 40px; padding: 8px 16px; }
-@media (max-width: 699px) {
-  .hero-actions .btn { width: 100%; }
-}
 
 /* ---------- Navegação entre sessões (fixa no topo ao rolar) ---------- */
 .sections-nav {
