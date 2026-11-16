@@ -244,7 +244,8 @@ viewer.addEventListener('touchend', (e) => {
 
 const video = $('cover-video');
 const sound = $('sound');
-let userChoseMute = false;
+let firstPassDone = false; // a primeira passada do vídeo é com som; depois repete mudo
+let userTouchedSound = false; // depois que a pessoa usa o botão, a escolha é dela
 
 function setSound(on) {
   video.muted = !on;
@@ -253,11 +254,13 @@ function setSound(on) {
 }
 
 // Os navegadores só deixam vídeo com som tocar depois que a pessoa interage com a página.
-// Então: tenta tocar com som; se for bloqueado, toca mudo e liga o som no primeiro toque/clique.
+// Então: tenta tocar com som; se for bloqueado, toca mudo e liga o som no primeiro toque/clique
+// (só se a primeira passada ainda não acabou).
 const UNLOCK_EVENTS = ['pointerdown', 'touchend', 'keydown'];
+const stopUnlock = () => UNLOCK_EVENTS.forEach((t) => removeEventListener(t, unlock, true));
 function unlock(e) {
-  UNLOCK_EVENTS.forEach((t) => removeEventListener(t, unlock, true));
-  if (userChoseMute || sound.contains(e.target)) return; // o botão de som cuida sozinho
+  stopUnlock();
+  if (firstPassDone || userTouchedSound || sound.contains(e.target)) return;
   setSound(true);
   video.play().catch(() => setSound(false));
 }
@@ -273,14 +276,24 @@ async function startVideo() {
   }
 }
 
+// Fim da primeira passada: desliga o som (se a pessoa não ligou pelo botão) e passa a repetir.
+video.addEventListener('ended', () => {
+  if (firstPassDone) return;
+  firstPassDone = true;
+  stopUnlock();
+  if (!userTouchedSound) setSound(false);
+  video.loop = true;
+  video.play().catch(() => {});
+});
+
 sound.addEventListener('click', () => {
-  const on = video.muted;
-  userChoseMute = !on;
-  setSound(on);
+  userTouchedSound = true;
+  setSound(video.muted);
   if (video.paused) video.play().catch(() => {});
 });
 
 if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  video.loop = true;
   video.controls = true; // quem pediu menos movimento no celular dá o play quando quiser
 } else {
   startVideo();
