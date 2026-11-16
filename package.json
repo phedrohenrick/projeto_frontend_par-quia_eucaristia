@@ -1,0 +1,9 @@
+{
+  "name": "galeria-primeira-eucaristia",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --env-file=.env dev.mjs"
+  },
+  "engines": { "node": ">=20" }
+}
