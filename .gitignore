@@ -2,3 +2,6 @@ node_modules
 .env
 .env.local
 .vercel
+
+# vídeo bruto (a versão otimizada fica em assets/capa.mp4)
+WhatsApp Video*.mp4

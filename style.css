@@ -79,20 +79,47 @@ h1 {
 }
 
 .cover {
-  display: block;
+  position: relative;
   margin: 0 -16px;
 }
-.cover img {
+.cover video {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 720 / 1264;
+  max-height: 82svh;
   object-fit: cover;
   background: var(--surface);
 }
+.sound {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(20, 15, 10, .6);
+  color: #fff;
+  font: 600 14px/1 'Manrope', system-ui, sans-serif;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.sound .ico-on, .sound[aria-pressed="true"] .ico-off { display: none; }
+.sound[aria-pressed="true"] .ico-on { display: block; }
 @media (min-width: 700px) {
-  .cover { margin: 0; }
-  .cover img { border-radius: 18px; box-shadow: 0 24px 60px -30px rgba(60, 40, 15, .45); }
+  .cover { margin: 0 auto; width: fit-content; }
+  .cover video {
+    width: auto;
+    height: min(80vh, 760px);
+    max-height: none;
+    border-radius: 18px;
+    box-shadow: 0 24px 60px -30px rgba(60, 40, 15, .45);
+  }
   .logo-paroquia { height: 96px; }
   .logo-pascom { height: 60px; }
   .title { margin: 8px 0 36px; }

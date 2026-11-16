@@ -243,4 +243,20 @@ viewer.addEventListener('touchend', (e) => {
   startX = null;
 });
 
+/* ---------- Vídeo da capa ---------- */
+
+const video = $('cover-video');
+const sound = $('sound');
+if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  video.removeAttribute('autoplay');
+  video.pause();
+  video.controls = true;
+}
+sound.addEventListener('click', () => {
+  video.muted = !video.muted;
+  if (!video.muted && video.paused) video.play();
+  sound.setAttribute('aria-pressed', String(!video.muted));
+  sound.querySelector('span').textContent = video.muted ? 'Ativar som' : 'Som ativado';
+});
+
 load();
