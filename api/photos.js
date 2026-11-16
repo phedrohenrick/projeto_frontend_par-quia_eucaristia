@@ -8,7 +8,7 @@ const MAX_DEPTH = 3; // subpastas dentro das sessões também entram (na mesma s
 
 // Ordem e nome de exibição das sessões conhecidas (comparação sem acento/maiúscula).
 // Pastas com outros nomes aparecem depois destas, em ordem alfabética.
-const SECTION_ORDER = ['meninos', 'meninas', 'cerimonia', 'familias'];
+const SECTION_ORDER = ['cerimonia', 'meninas', 'meninos', 'familias'];
 const SECTION_LABELS = {
   meninos: 'Meninos',
   meninas: 'Meninas',

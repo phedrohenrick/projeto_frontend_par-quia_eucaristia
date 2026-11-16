@@ -10,7 +10,7 @@ As fotos continuam no Drive; a Vercel hospeda só o site e uma função que list
 3. Copie o link. O ID da pasta é o trecho depois de `/folders/`:
    `https://drive.google.com/drive/folders/`**`1AbC...xyz`**
 
-Cada subpasta vira uma sessão no site. As pastas `meninos`, `meninas`, `cerimonia` e `familias`
+Cada subpasta vira uma sessão no site. As pastas `cerimonia`, `meninas`, `meninos` e `familias`
 aparecem nessa ordem (com ou sem acento/maiúscula); outras pastas aparecem depois, e fotos
 soltas na pasta principal ficam em "Outras fotos".
 
