@@ -88,16 +88,6 @@ h1 {
   background: var(--gold-soft);
 }
 
-.kicker {
-  margin: 8px 0 0;
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: .42em;
-  text-indent: .42em; /* compensa o espaçamento da última letra para centralizar */
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
 .cover {
   position: relative;
   margin: 0 -16px;
@@ -152,7 +142,15 @@ h1 {
   gap: 6px;
   margin-top: 22px;
 }
-.count { margin: 0; color: var(--muted); font-size: 15px; }
+.count {
+  margin: 8px 0 0;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .42em;
+  text-indent: .42em; /* compensa o espaçamento da última letra para centralizar */
+  text-transform: uppercase;
+  color: var(--muted);
+}
 .count:empty { display: none; }
 
 .btn {
